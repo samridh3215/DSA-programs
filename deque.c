@@ -8,7 +8,7 @@ void create_queue(int arr[]){
 	for(int i = 0; i<max; i++)
 		arr[i] = -1;
 	front = 0;rear = -1;
-	printf("[front:%d, rear: %d]\n", front, rear);
+	printf("\t[front:%d, rear: %d]\n", front, rear);
 }
 void in_front(int arr[], int item){
 	if(front == -1)
@@ -17,7 +17,7 @@ void in_front(int arr[], int item){
 		front--;
 		arr[front] = item;
 		printf("Inserted from front %d", item);
-	printf("[front:%d, rear: %d]\n", front, rear);
+	printf("\t[front:%d, rear: %d]\n", front, rear);
 	}
 }
 void in_rear(int arr[], int item){
@@ -33,7 +33,7 @@ void in_rear(int arr[], int item){
 	    arr[rear]=item;
 	    printf("Inserted from rear %d", item);
 	}
-	printf("[front:%d, rear: %d]\n", front, rear);
+	printf("\t[front:%d, rear: %d]\n", front, rear);
 }
 int del_front(int arr[]){
 	int item;
@@ -45,7 +45,7 @@ int del_front(int arr[]){
 		front++;
 		printf("deleted %d from front", item);
 	}
-	printf("[front:%d, rear: %d]\n", front, rear);
+	printf("\t[front:%d, rear: %d]\n", front, rear);
 }
 int del_rear(int arr[]){
 	int item;
@@ -57,7 +57,7 @@ int del_rear(int arr[]){
 		rear--;
 		printf("deleted %d from rear", item);
 	}
-	printf("[front:%d, rear: %d]\n", front, rear);
+	printf("\t[front:%d, rear: %d]\n", front, rear);
 }
 void display(int arr[]){
 		printf("Front: ");
