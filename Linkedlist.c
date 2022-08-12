@@ -9,7 +9,9 @@ struct node{
 struct node* head;
 
 //
-void front_insert(int x){
+void front_insert(){
+	int x;
+	scanf("%d", &x);
 	struct node *temp = (struct node*)malloc(sizeof(struct node));
 	temp->data = x;
 	temp->address = head;
@@ -17,7 +19,9 @@ void front_insert(int x){
 	printf("Inserted %d at the front\n", x);
 }
 
-void rear_insert(int x){
+void rear_insert(){
+	int x;
+	scanf("%d", &x);
 	struct node* newnode  = (struct node*)malloc(sizeof(struct node));
 	struct node* temp;
 	temp = head;
@@ -29,7 +33,11 @@ void rear_insert(int x){
 	printf("Inserted %d at the rear\n", x);
 }
 
-void insert_here(int x, int  pos){
+void insert_here(){
+	int x;
+	scanf("%d", &x);
+	int pos;
+	scanf("%d", &pos);
 	int c = 0, i = 0;
 	struct node* temp;
 	struct node* newnode = (struct node*)malloc(sizeof(struct node));
@@ -58,7 +66,9 @@ void insert_here(int x, int  pos){
 	}
 }
 
-void delete_this(int x){
+void delete_this(){
+	int x;
+	scanf("%d", &x);
 	struct node* curr = head;
 	struct node* prev = NULL;
 	
@@ -133,13 +143,13 @@ void sort(){
 	int temp;
 	int size = get_size();
 	int k = size;
-	for ( int i = 1; i < size; i++, k-- ) {
+	for (int i = 1; i < size; i++, k--){
       current = head;
       next = head->address;
 		
       for (int j = 1 ; j < size ; j++ ) {   
 
-         if ( current->data > next->data ) {
+         if (current->data > next->data){
             temp = current->data;
             current->data = next->data;
             next->data = temp;
@@ -152,18 +162,39 @@ void sort(){
 }
 
 void main(){
-	head = NULL;
-	front_insert(1);
-	front_insert(2);
-	front_insert(5);
-	rear_insert(3);
-	rear_insert(6);
-	insert_here(4,2);
-	//reverse();
-	display();
-	printf("----\n");
-	//sort();
-	delete_this(5);
-	display();
+	int choice;
+	
+	do{
+		printf("Enter your choice\n1.Front insert\n2.Rear insert\n3.Insert at a position\n4.Pop\n5.Delete an element\n6.Display\n7.Sort");
+		scanf("%d", &choice);
+		switch (choice)
+	{
+	case 1:
+		front_insert();
+		break;
+	case 2:
+		rear_insert();
+		break;
+	case 3:
+		insert_here();
+		break;
+	case 4:
+		pop();
+		break;
+	case 5:
+		delete_this();
+		break;
+	case 6:
+		display();
+		break;
+	case 7:
+		sort();
+		break;
+	
+	} 
+
+}while(choice>=1 && choice<8);
+
+
 
 }
