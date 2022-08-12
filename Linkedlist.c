@@ -3,11 +3,12 @@
 
 struct node{
 	int data;
-	struct node *address;
+	struct node* address;
 };
 
-struct node *head;
+struct node* head;
 
+//
 void front_insert(int x){
 	struct node *temp = (struct node*)malloc(sizeof(struct node));
 	temp->data = x;
@@ -54,6 +55,28 @@ void insert_here(int x, int  pos){
 		temp->address = newnode;
 		newnode->address = temp1;
 		printf("Inserted %d at %d\n",x,pos);
+	}
+}
+
+void delete_this(int x){
+	struct node* curr = head;
+	struct node* prev = NULL;
+	
+	while(curr!=NULL){
+	
+		if(head->data == x){
+		prev = head;
+		head = head->address;
+		free(prev);
+		break;
+	}
+		if(curr->data == x){
+			prev->address = curr->address;
+			free(curr);
+			break;
+		}
+		prev = curr;
+		curr = curr->address;
 	}
 }
 
@@ -136,11 +159,11 @@ void main(){
 	rear_insert(3);
 	rear_insert(6);
 	insert_here(4,2);
-	display();
-	reverse();
+	//reverse();
 	display();
 	printf("----\n");
-	sort();
+	//sort();
+	delete_this(5);
 	display();
 
 }
