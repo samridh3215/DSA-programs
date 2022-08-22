@@ -53,6 +53,58 @@ void rear_insert(){
 	printf("inserted %d at rear\n", data);
 }
 
+int get_size(){
+	int count=0;
+	node* temp= head;
+	while(temp!=NULL){
+		count++;
+		temp = temp->next;
+	}
+	return count;
+}
+
+void insert_here(){
+	int data, pos;
+	printf("enter position and data separated by a space");
+	scanf("%d %d", &pos, &data);
+	node* temp = head;
+	if(head==NULL){
+		printf("empty");
+	}
+	else if(pos>get_size()){
+		printf("overflow");
+	}
+	else{
+		node* newnode = (node*)malloc(sizeof(node));
+		for(int i = 1;i<pos; i++){
+			temp = temp ->next;
+		}
+		newnode->data = data;
+		newnode->next = temp->next;
+		temp->next->prev = newnode;
+		temp->next = newnode;
+		newnode->prev = temp;
+	}
+	printf("inserted %d at %d\n", data, pos);
+
+}
+
+void delete_front(){
+	head = head->next;
+	node* temp = head->prev;
+	head->prev = NULL;
+	temp->next =NULL;
+	free(temp);
+}
+
+void delete_rear(){
+	tail = tail->prev;
+	node* temp = tail->next;
+	temp->prev=NULL;
+	tail->next=NULL;
+	free(temp);
+}
+
 void display(){
 	if(head == NULL)
 		printf("empty\n");
@@ -72,4 +124,8 @@ void main(){
     rear_insert();
     rear_insert();
     display();
+	delete_front();
+	front_insert();
+	insert_here();
+	display();
 }
