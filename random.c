@@ -1,76 +1,173 @@
-#include <stdio.h>
-#include <stdlib.h>
-#define max 50
+#include<stdlib.h>
+#include<stdio.h>
 
-typedef struct vararr{
-    int *a;
-    int index;
-    int size;
-}VARLIST;
+typedef struct node
+{
+    int data;
+    struct node *prev;
+    struct node *next;
 
-void init(VARLIST *p){
-    p->index = -1;
-    p->size = 0;
+}NODE;
+
+typedef struct list
+{   
+    struct node *head;
+    struct node *last;
+}LIST;
+
+NODE* createnode()
+{
+    NODE *newnode;
+    newnode=(NODE*)malloc(sizeof(NODE));
+    return newnode;
 }
 
-void array_alloc(VARLIST *p){
-    if(p->size == 0){
-        p->a = (int *)malloc(max*sizeof(int));
-        p->size = max;
+void ins(LIST* p){
+
+    if(p->head ==NULL){
+        p->head = createnode();
+        int no;
+        printf("enter number for first node\n");
+        scanf("%d", &no);
+        p->head->data = no;
+        p->last = p->head;
+        p->head->next = NULL;
+        
     }
-    else if(p->index ==p->size-1){
-        p->a = (int *)realloc(p->a, 2*(p->size)*sizeof(int));
-        p->size = 2*(p->size);
-    }
-}
-
-int append(VARLIST *p, int data){
-    array_alloc(p);
-    if(p->index == p->size-1)
-        return 0;
-    p->index++;
-    p->a[p->index] = data;
-    return 1;
-}
-
-int delete(VARLIST *p, int *pdata){
-    if(p->index == -1)
-        return 0;
-    *pdata = p->a[p->index];
-    p->index--;
-    return 1;
-}
-
-void display(VARLIST *p){
-    if(p->index == -1)
-        printf("list is empty");
     else{
-        for(int i = 0; i<p->index;  i++){
-            printf("%d\n", p->a[i]);
+        NODE* newnode = createnode();
+        int no;
+        printf("enter number for next node \n");
+        scanf("%d", &no);
+        newnode->data = no;
+        NODE* temp = p->head;
+
+        if(no<=p->head->data){
+            newnode->prev=NULL;
+            newnode->next = p->head;
+            p->head->prev = newnode;
+            p->head = newnode;
+        }
+
+        else if(no>=p->last->data){
+            newnode->prev = p->last;
+            newnode->next = NULL;
+            p->last->next = newnode;
+            p->last = newnode;
+        }
+
+        else{
+            while (temp->data<=no && temp!=NULL){
+                temp = temp->next;
+            }              
+            newnode->next = temp;
+            newnode->prev = temp->prev;
+            temp->prev->next = newnode;
+            temp->prev = newnode;
         }
     }
 }
 
-void main(){
-    VARLIST mylist;
-    init(&mylist);
-    int choice, res, ele, *a;
-    do{
-        printf("1. Append, 2. Delete Last, 3. Display\n");
-        scanf("%d", &choice);
-        switch (choice)
-        {
-        case 1: printf("enter");
-                scanf("%d", &ele);
-                append(&mylist, ele);
-                break;
+void display(LIST *p){
+    NODE* temp;
+    temp = p->head;
+    if (p->head==NULL){
+    	printf("\n the list is empty\n");
+    }
+    else{
+	    while(temp!=NULL){
+	    	printf("%d->",temp->data);
+            temp= temp->next;
+	        }
+        printf("NULL\n");
+    }
+}
 
-        case 2: delete(&mylist, a);
-        break;
+void freelist(LIST* q){
+    NODE* qtemp = q->head;
+    while(q->head!=NULL){
+        q->head = q->head->next;
+        qtemp->next =NULL;
+        qtemp->prev=NULL;
+        free(qtemp);
+        qtemp = q->head;
+    }
+}
+
+void merge(LIST *p, LIST *q){
+    NODE* qtemp = q->head;
+    int no;
+    while(qtemp!=NULL){
+    no = qtemp->data;
+
+    if(p->head ==NULL){
+        p->head = createnode();
+        p->head->data = no;
+        p->last = p->head;
+        p->head->next = NULL;
         
-        case 3: display(&mylist);
-                break;
-        
+    }
+    else{
+        NODE* newnode = createnode();
+        newnode->data = no;
+        NODE* temp = p->head;
+
+        if(no<=p->head->data){
+            newnode->prev=NULL;
+            newnode->next = p->head;
+            p->head->prev = newnode;
+            p->head = newnode;
         }
-    }while(choice<4);
+
+        else if(no>=p->last->data){
+            newnode->prev = p->last;
+            newnode->next = NULL;
+            p->last->next = newnode;
+            p->last = newnode;
+        }
+
+        else{
+            while (temp->data<=no && temp!=NULL){
+                temp = temp->next;
+            }              
+            newnode->next = temp;
+            newnode->prev = temp->prev;
+            temp->prev->next = newnode;
+            temp->prev = newnode;
+            }
+        }
+    qtemp = qtemp->next;
+    }
+    freelist(q);
+}
+
+void create_list(LIST *p){
+    int x;
+    printf("enter no of elements to enter\n");
+    scanf("%d", &x);
+    printf("creating a list of size %d\n", x);
+    p->head =NULL;
+    p->last=NULL;
+    printf("initialised list\n");
+    
+    for(int i =0; i<x; i++){
+        ins(p);
+    }
+}
+
+int main(){
+
+    LIST list1, list2;
+    create_list(&list1);
+    printf("done creating list\n\n");
+    create_list(&list2);
+    printf("---before merging---\n");
+    display(&list1);
+    display(&list2);
+    merge(&list1, &list2);
+    printf("---after merging---\n");
+    display(&list1);
+    display(&list2);
+
+    return 0;
 }
