@@ -9,6 +9,13 @@ typedef struct node{
 
 treenode* head;
 
+
+void swap(treenode* a, treenode*b){
+	int temp = a->value;
+	a->value= b->value;
+	b->value = temp;
+}
+
 treenode *createnode(int value){
 	treenode* ptr = (treenode*)malloc(sizeof(treenode));
 	ptr->value = value;
@@ -23,6 +30,39 @@ void insertleft(treenode* node, int value){
 
 void insertright(treenode* node, int value){
 	node->right = createnode(value);
+}
+int findheight(treenode* root){
+	if(root == NULL)
+		return 0;
+	int left = findheight(root->left);
+	int right = findheight(root->right);
+	if(left>right)
+		return left+1;
+	else
+		return right+1;
+}
+
+void printCurrentLevel(treenode* root, int level){
+    if (root == NULL)
+        return;
+    if (level == 1)
+        printf("%d ", root->value);
+    else if (level > 1) {
+        printCurrentLevel(root->left, level - 1);
+        printCurrentLevel(root->right, level - 1);
+    }
+}
+
+void printLevelOrder(treenode* root){
+    int h = findheight(root);
+    int i;
+    for (i = 1; i <= h; i++)
+        printCurrentLevel(root, i);
+}
+
+
+//in-progress
+void heapify(treenode* root){
 }
 
 void inorder(treenode* root){
@@ -62,6 +102,8 @@ int main(){
 	preorder(root);
 	printf("\n");
 	postorder(root);
+	printf("\n %d\n", findheight(root));
+	printLevelOrder(root);
 	
 	return 0;
 }
