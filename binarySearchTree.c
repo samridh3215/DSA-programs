@@ -37,15 +37,51 @@ int search(node* root, int data){
     else if (root->data >= data) return search(root->left, data);
     else return search(root->right, data);
 }
+Node* FindMin(Node* root)
+{
+	while(root->left != NULL) root = root->left;
+	return root;
+}
+
+node* delete(node* root, int data){
+    if(root==NULL) return root;
+    else if(data<root->data) 
+        root->left = delete(root->left, data);
+    else if(data>root->data)
+        root->right = delete(root->right, data);
+    else{
+        if(root->left == NULL&& root->right ==NULL){
+            free(root);
+            root = NULL;
+        }
+        else if(root->right == NULL){
+            node* temp = root;
+            root = root->left;
+            free(temp);
+        }
+        else if(root->left == NULL){
+            node* temp = root;
+            root = root->right;
+            free(temp);
+        }
+        else{
+            node* temp= findmin(root->right);
+            root->data  = temp->data;
+            root->right = delete(root->left, temp->data);
+        }
+    }
+    return root;
+
+}   
 
 void main(){
     node* root = NULL;
-    root = insert(root, 15);
-    root = insert(root, 10);
+    
+    root = insert(root, 90);
     root = insert(root, 20);
     root = insert(root, 40);
     root = insert(root, 60);
     root = insert(root, 24);
     root = insert(root, 21);
-    printf("%d", search(root, 24));
+
 }
