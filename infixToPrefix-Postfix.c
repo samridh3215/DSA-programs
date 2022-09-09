@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 struct Stack {
 	int top;
@@ -49,8 +50,7 @@ void push(struct Stack* stack, char op)
 
 int isOperand(char ch)
 {
-	return (ch >= 'a' && ch <= 'z')
-		|| (ch >= 'A' && ch <= 'Z');
+	return (ch >= 'a' && ch <= 'z')|| (ch >= 'A' && ch <= 'Z')||(ch>='0' && ch<='9');
 }
 
 int Prec(char ch)
@@ -132,17 +132,37 @@ int infixToPrefix(char* exp){
         }
     }
     while (!isEmpty(stack)) exp[++k] = pop(stack);
-
 	exp[++k] = '\0';
 	printf("%s", strrev(exp));
 }
 
+char evaluatePostfix(char *exp){
+	struct Stack* stack = createStack(strlen(exp));
+	int i = 0;
+	for (;i<strlen(exp); ++i){
+		if(isdigit(exp[i]))
+			push(stack, exp[i]-'0');
+		else{
+			int val1 = pop(stack);
+            int val2 = pop(stack);
+            switch (exp[i]){
+            case '+': push(stack, val2 + val1); break;
+            case '-': push(stack, val2 - val1); break;
+            case '*': push(stack, val2 * val1); break;
+            case '/': push(stack, val2/val1); break;
+		}
+	}
+	return pop(stack);
+	}
+}
+
 int main(){
 
-	char exp[] = "a+b*(c^d-e)^(f+g*h)-i";
+	char exp[] = "(6+8-1)";
 	infixToPostfix(exp);
-    printf("\n");
-    infixToPrefix(exp);
+	
+	printf("\n%d", evaluatePostfix(exp));
+	
 	return 0;
 
 }
