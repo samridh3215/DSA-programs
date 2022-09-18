@@ -77,9 +77,11 @@ void peek(s* pt){
 
 void printstack(s* st){
     for(int i = 0; i<count; i++){
-            printf("%d\n", st->items[i]);
+            printf("%d  ", st->items[i]);
+    }
+    printf("\n");
 }
-}
+
 int main(){
     s mystack;
     s* s_pointer;

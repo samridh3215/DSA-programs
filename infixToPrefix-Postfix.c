@@ -156,9 +156,37 @@ char evaluatePostfix(char *exp){
 	}
 }
 
+
+int check(char * exp){
+	struct Stack* stack = createStack(sizeof(strlen(exp)));
+	for(int i =0; i<strlen(exp); i++){
+		if (exp[i] == '('||exp[i] =='[' || exp[i] == '{')
+			push(stack, exp[i]);
+		else{
+			if(!stack)
+				return 0;
+			if(pop(stack)== '('){
+				if(exp[i] != ')')
+					return 0;
+			}
+			else if(pop(stack)== '['){
+				if(exp[i] != ']')
+					return 0;
+			}
+			else if(pop(stack)== '{'){
+				if(exp[i] != '}')
+					return 0;
+			}		
+	}
+
+	return 1;
+}
+}
+
 int main(){
 
-	char exp[] = "(6+8-1)";
+	char exp[] = "";
+	printf("%d\n", check(exp));
 	infixToPostfix(exp);
 	
 	printf("\n%d", evaluatePostfix(exp));

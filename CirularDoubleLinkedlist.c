@@ -177,9 +177,5 @@ int main(){
     display(mylist);
     del_end(mylist);
     display(mylist);
-
-
-
-
     return 0;
 }

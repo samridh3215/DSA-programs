@@ -125,6 +125,7 @@ void main(){
     rear_insert();
     display();
 	delete_front();
+	delete_rear();
 	front_insert();
 	insert_here();
 	display();

@@ -37,7 +37,7 @@ int search(node* root, int data){
     else if (root->data >= data) return search(root->left, data);
     else return search(root->right, data);
 }
-Node* FindMin(Node* root)
+node* FindMin(node* root)
 {
 	while(root->left != NULL) root = root->left;
 	return root;
