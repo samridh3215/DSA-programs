@@ -21,12 +21,12 @@ node* insert(node* root, int data){
         root = getNewNode(data);
         return root;
     }
-    else if(data <= root->data){
-        root->left = insert(root->left, data);
-    }
-    else{
-        root->right = insert(root->right, data);
-    }
+        else if(data <= root->data){
+            root->left = insert(root->left, data);
+        }
+        else{
+            root->right = insert(root->right, data);
+        }
     return root;
 }
 
@@ -37,7 +37,7 @@ int search(node* root, int data){
     else if (root->data >= data) return search(root->left, data);
     else return search(root->right, data);
 }
-node* FindMin(node* root)
+node* findmin(node* root)
 {
 	while(root->left != NULL) root = root->left;
 	return root;
@@ -73,6 +73,13 @@ node* delete(node* root, int data){
     return root;
 
 }   
+void inorder(node* root){
+	if (root == NULL)
+        return;
+    inorder(root->left);
+    printf("%d ", root->data);
+    inorder(root->right);
+}
 
 void main(){
     node* root = NULL;
@@ -82,6 +89,8 @@ void main(){
     root = insert(root, 40);
     root = insert(root, 60);
     root = insert(root, 24);
+    delete(root, 29);
     root = insert(root, 21);
+    inorder(root);
 
 }
