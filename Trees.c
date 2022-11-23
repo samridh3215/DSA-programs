@@ -94,6 +94,12 @@ void preorder(treenode* root){
 	
 }
 
+void iterative_postorder(treenode* root){
+	treenode* temp, *ltemp, *rtemp;
+	temp= root;
+	
+}
+
 int main(){
 	
 	treenode* root =createnode(1);
