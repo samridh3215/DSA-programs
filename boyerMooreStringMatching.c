@@ -1,5 +1,3 @@
-
-# include <limits.h>
 # include <string.h>
 # include <stdio.h>
 
@@ -47,10 +45,9 @@ int main()
 {
     char str[100], pattern[100];
     printf("Enter string: ");
-    scanf("%s",str);
-    fflush(stdin);
+    scanf("%[^\n]%*c",str);
     printf("enter pattern: ");
-    scanf("%s", pattern);
+    scanf("%[^\n]%*c", pattern);
     search(str, pattern);
 	return 0;
 }
