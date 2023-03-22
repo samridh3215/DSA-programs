@@ -27,13 +27,17 @@ void quickSort(int arr[], int low, int high){
     }
 
 
+void main() {
+  int n ;
+  scanf("%d", &n);
+  int arr[n];
+  for(int i=0; i<n; i++){
+      scanf("%d ",&arr[i]);
+  }
 
-int main(){
-    int arr[7] = {1,5,2,9,7,0,8};
-    quickSort(arr, 0, 6);
-    for(int i =0;i<7;i++){
-        printf("%d\n", arr[i]);
+  quickSort(arr, 0, n - 1);
+    for (int i = 0; i < n-1; ++i) {
+        printf("%d  ", arr[i]);
     }
-
-return 0;
+    printf("%d", arr[n-1]);
 }
